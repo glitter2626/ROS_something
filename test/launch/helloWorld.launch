@@ -1,0 +1,8 @@
+<launch>
+
+<rosparam param="my_param">"TTTTUUUUU"</rosparam>
+
+<node name="helloWorld" pkg="test" type="helloWorld" />
+
+
+</launch>
