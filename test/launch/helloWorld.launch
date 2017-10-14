@@ -1,8 +1,13 @@
 <launch>
 
+<!--create Parameter: /my_param -->
 <rosparam param="my_param">"TTTTUUUUU"</rosparam>
 
-<node name="helloWorld" pkg="test" type="helloWorld" />
+<param name="WTF" value="8787"/>
 
+<node name="helloWorld" pkg="test" type="helloWorld">
+	<!--create Private Parameter: /helloWorld/my_param , measure node name is correct-->
+	<param name="my_param" value="hello"/>
+</node>
 
 </launch>

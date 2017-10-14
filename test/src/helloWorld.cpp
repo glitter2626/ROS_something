@@ -3,11 +3,13 @@
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "helloWorld");
-  ros::NodeHandle nh;
+  ros::NodeHandle nh("~");	// will make Parameter be /helloWorld/...
 
   std::string s;
-  //nh.setParam("my_param", "TEST");
-  if (nh.getParam("my_param", s))
+  
+  nh.setParam("my_test", "TEST");	// create /helloeWorld/my_test & set value in node
+
+  if (nh.getParam("my_param", s))	// get /helloWorld/my_param value , if it has been created
   {
 	  ROS_INFO("Got param: %s", s.c_str());
   }
