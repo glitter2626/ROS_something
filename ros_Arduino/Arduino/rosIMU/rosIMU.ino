@@ -118,6 +118,8 @@ void loop()
 
     //Update MPU 6050
     Update_MPU6050();
+
+    nh.spinOnce();
 }
 void Update_MPU6050()
 {

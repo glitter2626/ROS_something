@@ -22,14 +22,14 @@ ros::Publisher pub_range_K( "/Kalman_ultrasound", &range_msg_K);
 
 char frameid[] = "/ultrasound";
 
-float getRange_Ultrasound(int pin_num){
+float getRange_Ultrasound(){
   
   float cmMsec;
   long microsec = ultrasonic.timing();
 
   cmMsec = ultrasonic.convert(microsec, Ultrasonic::CM);
   
-  return cmMsec;
+  return cmMsec/100; // m
 }
 
 void setup()
@@ -43,14 +43,14 @@ void setup()
   
   range_msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
   range_msg.header.frame_id =  frameid;
-  range_msg.field_of_view = 15/57.2958;  // fake
-  range_msg.min_range = 2.0;
-  range_msg.max_range = 400.0;
+  range_msg.field_of_view = 0.261799;  //15/57.2958 radian
+  range_msg.min_range = 0.02;
+  range_msg.max_range = 2.0;
   
   range_msg_K.radiation_type = sensor_msgs::Range::ULTRASOUND;
-  range_msg_K.field_of_view = 15/57.2958;  // fake
-  range_msg_K.min_range = 2.0;
-  range_msg_K.max_range = 400.0;
+  range_msg_K.field_of_view = 0.261799; //  15/57.2958 radian
+  range_msg_K.min_range = 0.02;
+  range_msg_K.max_range = 2.0;
   range_msg_K.header.frame_id = "/Kalman_ultrasound";
 }
 
@@ -63,9 +63,7 @@ void loop()
   //publish the adc value every 50 milliseconds
   //since it takes that long for the sensor to stablize
   if ( millis() >= range_time ){
-    int r =0;
-
-    range_msg.range = getRange_Ultrasound(5);
+    range_msg.range = getRange_Ultrasound();
     range_msg.header.stamp = nh.now();
     pub_range.publish(&range_msg);
 
